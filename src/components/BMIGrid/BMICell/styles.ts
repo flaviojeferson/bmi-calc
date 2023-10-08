@@ -8,21 +8,24 @@ const BMICellContainer = styled.div<{ color: string }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 
   &:hover {
     scale: 99%;
   }
 
-  h3 {
+  h3,
+  p {
     color: ${(props) => props.theme.white};
-    font-size: 1.5rem;
-    line-height: 200%;
+    text-shadow: 0px 0px 0.25rem #0000004d;
+  }
+
+  h3 {
+    font-size: 1.6rem;
   }
 
   p {
-    color: ${(props) => props.theme.white};
-    font-size: 0.9rem;
-    line-height: 200%;
+    font-size: 0.95rem;
   }
 `;
 
