@@ -2,10 +2,10 @@ import { styled } from 'styled-components';
 
 const MainContainer = styled.main`
   padding: 0.25rem;
-  max-width: 400px;
 
   h1 {
-    margin-block: 0.25rem;
+    margin-block: 0.5rem;
+    font-size: 2.5rem;
   }
 `;
 

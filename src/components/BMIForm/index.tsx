@@ -2,7 +2,11 @@ import { useRef } from 'react';
 import * as S from './styles';
 import { calculateBMI } from '../../utils/calculateBMI';
 
-const BMIForm: React.FC = () => {
+type BMIFormProps = {
+  className?: string;
+};
+
+const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
   const heightInputRef = useRef<HTMLInputElement>(null);
   const weightInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,7 +31,7 @@ const BMIForm: React.FC = () => {
   };
 
   return (
-    <S.MainContainer>
+    <S.MainContainer className={className}>
       <h1>Calcule seu IMC</h1>
 
       <p>
