@@ -1,6 +1,9 @@
 import { styled } from 'styled-components';
 
 const MainContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0.25rem;
 
   h1 {

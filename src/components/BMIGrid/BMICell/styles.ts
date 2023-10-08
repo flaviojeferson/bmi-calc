@@ -9,6 +9,7 @@ const BMICellContainer = styled.div<{ color: string }>`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding-block: 2rem;
 
   &:hover {
     scale: 99%;

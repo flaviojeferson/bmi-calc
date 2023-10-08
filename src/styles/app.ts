@@ -7,17 +7,9 @@ const AppContainer = styled.div`
 
   .bmi {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
-    max-width: 900px;
-
-    .bmi__form {
-      grid-column: 1 / 3;
-    }
-
-    .bmi__grid {
-      grid-column: 3 / 6;
-    }
+    max-width: 1000px;
   }
 `;
 
