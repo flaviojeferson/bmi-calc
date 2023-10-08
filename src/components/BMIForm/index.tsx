@@ -1,6 +1,31 @@
+import { useRef } from 'react';
 import * as S from './styles';
+import { calculateBMI } from '../../utils/calculateBMI';
 
 const BMIForm: React.FC = () => {
+  const heightInputRef = useRef<HTMLInputElement>(null);
+  const weightInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit: React.FormEventHandler = (e) => {
+    e.preventDefault();
+    const heightValueRef = heightInputRef.current?.value;
+    const weightValueRef = weightInputRef.current?.value;
+
+    if (heightValueRef && weightValueRef) {
+      const heightInCentimeters = Number(heightValueRef);
+      const weightInKilos = Number(weightValueRef);
+      const { bmiWithMeasureUnit } = calculateBMI(
+        heightInCentimeters,
+        weightInKilos,
+      );
+      alert(
+        `Você possui ${heightInCentimeters} centímetros de altura e ${weightInKilos} quilos de massa corpórea. Seu IMC é de ${bmiWithMeasureUnit}`,
+      );
+      return;
+    }
+    alert('Preencha todos os campos do formulário.');
+  };
+
   return (
     <S.MainContainer>
       <h1>Calcule seu IMC</h1>
@@ -11,7 +36,7 @@ const BMIForm: React.FC = () => {
         de obesidade ou desnutrição em pessoas de diferentes idades.
       </p>
 
-      <S.FormContainer>
+      <S.FormContainer onSubmit={handleSubmit}>
         <div className="form__field">
           <label className="form__label" htmlFor="form__input--height">
             Sua altura em centímetros
@@ -19,7 +44,9 @@ const BMIForm: React.FC = () => {
           <input
             type="number"
             id="form__input--height"
-            min={1}
+            ref={heightInputRef}
+            min={80}
+            max={220}
             className="form__input"
             placeholder="Exemplo: 165"
             required
@@ -33,7 +60,9 @@ const BMIForm: React.FC = () => {
           <input
             type="number"
             id="form__input--weight"
-            min={1}
+            ref={weightInputRef}
+            min={10}
+            max={150}
             className="form__input"
             placeholder="Exemplo: 65"
             required
