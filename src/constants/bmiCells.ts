@@ -21,7 +21,7 @@ const bmiCells: BMICellType[] = [
   },
   {
     title: 'Sobrepeso',
-    color: '#fbbf24',
+    color: '#E1A816',
     thumb: 'down',
     range: {
       min: 25,
