@@ -1,12 +1,14 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import * as S from './styles';
 import { calculateBMI } from '../../utils/calculateBMI';
+import { BMIContext } from '../../hooks/BMIContext.tsx';
 
 type BMIFormProps = {
   className?: string;
 };
 
 const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
+  const { bmiState, bmiStateDispatch } = useContext(BMIContext);
   const heightInputRef = useRef<HTMLInputElement>(null);
   const weightInputRef = useRef<HTMLInputElement>(null);
 
@@ -18,14 +20,24 @@ const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
     if (heightValueRef && weightValueRef) {
       const heightInCentimeters = Number(heightValueRef);
       const weightInKilos = Number(weightValueRef);
-      const { bmiWithMeasureUnit, bmiCell } = calculateBMI(
+      const { bmiCell, bmiWithMeasureUnit } = calculateBMI(
         heightInCentimeters,
         weightInKilos,
       );
       if (bmiCell) {
-        alert(
-          `Você possui ${heightInCentimeters} centímetros de altura e ${weightInKilos} quilos de massa corpórea. Seu IMC é de ${bmiWithMeasureUnit} e você está ${bmiCell.title.toLowerCase()}`,
-        );
+        bmiStateDispatch({
+          type: 'set',
+          payload: {
+            user: {
+              heightInCentimeters,
+              weightInKilos,
+              bmiWithMeasureUnit,
+            },
+            bmiCell,
+          },
+        });
+        heightInputRef.current.value = '';
+        weightInputRef.current.value = '';
         return;
       }
       alert('Não foi possivel fazer o cálculo do seu IMC.');
@@ -33,7 +45,7 @@ const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
     }
     alert('Preencha todos os campos do formulário.');
   };
-
+  const isDisabled = !!bmiState;
   return (
     <S.MainContainer className={className}>
       <h1>Calcule seu IMC</h1>
@@ -57,6 +69,7 @@ const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
             max={220}
             className="form__input"
             placeholder="Exemplo: 165"
+            disabled={isDisabled}
             required
           />
         </div>
@@ -73,11 +86,17 @@ const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
             max={150}
             className="form__input"
             placeholder="Exemplo: 65"
+            disabled={isDisabled}
             required
           />
         </div>
 
-        <input type="submit" className="form__input--submit" value="CALCULAR" />
+        <input
+          type="submit"
+          className="form__input--submit"
+          value="CALCULAR"
+          disabled={isDisabled}
+        />
       </S.FormContainer>
     </S.MainContainer>
   );
