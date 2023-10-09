@@ -21,6 +21,12 @@ const FormContainer = styled.form`
   padding-block: 1rem;
   width: 100%;
 
+  & input:disabled {
+    opacity: 0.5;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
   .form__field {
     align-items: flex-start;
     display: flex;
@@ -52,7 +58,7 @@ const FormContainer = styled.form`
     transition: background-color
       ${(props) => props.theme['transition-duration']};
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: ${(props) => props.theme['indigo-700']};
       border-color: ${(props) => props.theme['indigo-700']};
     }

@@ -3,17 +3,13 @@ import { styled } from 'styled-components';
 const BMICellContainer = styled.div<{ color: string }>`
   background-color: ${(props) => props.color};
   border-radius: 1rem;
-  transition: scale ${(props) => props.theme['transition-duration']};
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding-block: 2rem;
-
-  &:hover {
-    scale: 99%;
-  }
 
   h3,
   p {
@@ -27,6 +23,9 @@ const BMICellContainer = styled.div<{ color: string }>`
 
   p {
     font-size: 0.95rem;
+    max-width: 20rem;
+    text-align: center;
+    margin-block: 0.5rem;
   }
 `;
 
@@ -34,9 +33,8 @@ const BMICircle = styled.div`
   background-color: #00000033;
   border-radius: 50%;
   display: grid;
-  height: 4rem;
+  padding: 1rem;
   place-items: center;
-  width: 4rem;
 
   .thumb {
     width: 2rem;
