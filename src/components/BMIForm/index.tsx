@@ -18,13 +18,17 @@ const BMIForm: React.FC<BMIFormProps> = ({ className }) => {
     if (heightValueRef && weightValueRef) {
       const heightInCentimeters = Number(heightValueRef);
       const weightInKilos = Number(weightValueRef);
-      const { bmiWithMeasureUnit } = calculateBMI(
+      const { bmiWithMeasureUnit, bmiCell } = calculateBMI(
         heightInCentimeters,
         weightInKilos,
       );
-      alert(
-        `Você possui ${heightInCentimeters} centímetros de altura e ${weightInKilos} quilos de massa corpórea. Seu IMC é de ${bmiWithMeasureUnit}`,
-      );
+      if (bmiCell) {
+        alert(
+          `Você possui ${heightInCentimeters} centímetros de altura e ${weightInKilos} quilos de massa corpórea. Seu IMC é de ${bmiWithMeasureUnit} e você está ${bmiCell.title.toLowerCase()}`,
+        );
+        return;
+      }
+      alert('Não foi possivel fazer o cálculo do seu IMC.');
       return;
     }
     alert('Preencha todos os campos do formulário.');
