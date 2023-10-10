@@ -3,21 +3,13 @@ import { BMIContext } from '../../hooks/BMIContext.tsx';
 import { BMICell } from './BMICell';
 import { BMIGridContainer } from './styles.ts';
 import { useContext } from 'react';
-import arrowBackSvg from '../../assets/arrow_back.svg';
 
 type BMIGridType = {
   className?: string;
 };
 
 const BMIGrid: React.FC<BMIGridType> = ({ className }) => {
-  const { bmiState, bmiStateDispatch } = useContext(BMIContext);
-
-  const handleResetBmiState = () => {
-    bmiStateDispatch({
-      type: 'set',
-      payload: undefined,
-    });
-  };
+  const { bmiState } = useContext(BMIContext);
 
   const existsResult = !!bmiState;
 
@@ -35,14 +27,7 @@ const BMIGrid: React.FC<BMIGridType> = ({ className }) => {
 
       {existsResult && (
         <>
-          <BMICell cell={bmiState.bmiCell} hasDescription />
-          <button
-            className="grid__button--reset"
-            title="Refazer cálculo"
-            onClick={handleResetBmiState}
-          >
-            <img src={arrowBackSvg} alt="Refazer" />
-          </button>
+          <BMICell cell={bmiState.bmiCell} highlighted />
         </>
       )}
     </BMIGridContainer>

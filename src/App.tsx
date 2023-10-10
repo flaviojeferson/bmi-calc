@@ -4,7 +4,7 @@ import { GlobalStyle } from './styles/global';
 import { defaultTheme } from './themes/defaultTheme';
 import { BMIGrid } from './components/BMIGrid';
 import { AppContainer } from './styles/app';
-import { BMIContextProvider } from './hooks/bmiContext';
+import { BMIContextProvider } from './hooks/BMIContext';
 
 const App: React.FC = () => {
   return (

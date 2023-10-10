@@ -5,18 +5,26 @@ import thumbDownSvg from '../../../assets/thumb-down.svg';
 import { numberFormat } from '../../../utils/numberFormat.ts';
 import { BMIContext } from '../../../hooks/BMIContext.tsx';
 import { useContext } from 'react';
+import arrowBackSvg from '../../../assets/arrow_back.svg';
 
 type BMICellProps = {
   cell: BMICellType;
-  hasDescription?: boolean;
+  highlighted?: boolean;
 };
 
-const BMICell: React.FC<BMICellProps> = ({ cell, hasDescription }) => {
-  const { bmiState } = useContext(BMIContext);
+const BMICell: React.FC<BMICellProps> = ({ cell, highlighted }) => {
+  const { bmiState, bmiStateDispatch } = useContext(BMIContext);
   const { color, range, thumb, title } = cell;
 
   const ICON_ALT = thumb === 'up' ? 'Bom' : 'Ruim';
   const ICON_SRC = thumb === 'up' ? thumbUpSvg : thumbDownSvg;
+
+  const handleResetBmiState = () => {
+    bmiStateDispatch({
+      type: 'set',
+      payload: undefined,
+    });
+  };
 
   return (
     <BMICellContainer color={color}>
@@ -32,7 +40,7 @@ const BMICell: React.FC<BMICellProps> = ({ cell, hasDescription }) => {
 
       <h3>{title}</h3>
 
-      {hasDescription && bmiState && (
+      {highlighted && bmiState && (
         <>
           <p>
             Você tem <strong>{bmiState.user.heightInCentimeters}</strong>{' '}
@@ -43,13 +51,21 @@ const BMICell: React.FC<BMICellProps> = ({ cell, hasDescription }) => {
 
           <p>
             Seu IMC é <strong>{bmiState.user.bmiWithMeasureUnit}</strong>, nesse
-            caso, você se está{' '}
-            <strong>{bmiState.bmiCell.title.toLowerCase()}</strong>!
+            caso, você é considerado{' '}
+            <strong>{bmiState.bmiCell.title.toLowerCase()}</strong> pela OMS!
           </p>
+
+          <button
+            className="grid__button--reset"
+            title="Refazer cálculo"
+            onClick={handleResetBmiState}
+          >
+            <img src={arrowBackSvg} alt="Refazer" />
+          </button>
         </>
       )}
 
-      {!hasDescription && (
+      {!highlighted && (
         <p>
           IMC está entre <strong>{numberFormat(range.min)}</strong> e{' '}
           <strong>{numberFormat(range.max)}</strong>
